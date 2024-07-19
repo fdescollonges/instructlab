@@ -6,8 +6,6 @@ ENV NVIDIA_REQUIRE_CUDA "cuda>=12.4 brand=tesla,driver>=470,driver<471 brand=unk
 ENV NV_CUDA_CUDART_VERSION 12.4.127-1
 ENV NV_CUDA_COMPAT_PACKAGE cuda-compat-12-4
 
-FROM base as base-arm64
-
 LABEL maintainer "NVIDIA CORPORATION <cudatools@nvidia.com>"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
