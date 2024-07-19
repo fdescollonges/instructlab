@@ -51,11 +51,9 @@ RUN apt-get update && \
   pip3 --no-cache-dir install --upgrade pip && \
   rm -rf /var/lib/apt/lists/*
 
-WORKDIR /home/ilab-user
+RUN useradd -ms /bin/bash ilab-user
 
-RUN chgrp -R 0 /home/ilab-user && \
-    chmod -R g=u /home/ilab-user && \
-    export HOME=/home/ilab-user
+WORKDIR /home/ilab-user
 
 ARG USERNAME=ilab-user
 
