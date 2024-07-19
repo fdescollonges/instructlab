@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-get update && \
     apt-get -y install cuda-toolkit-12-4 && \
     apt-get -y install nvidia-utils-535 && \
-    apt-get -y nvtop
+    apt-get -y install nvtop
 
 # Required for nvidia-docker v1
 RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf \ 
