@@ -1,6 +1,7 @@
 FROM ubuntu:22.04
 
 LABEL maintainer "Franck Descollonges <franck_descollonges@fr.ibm.com>"
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
