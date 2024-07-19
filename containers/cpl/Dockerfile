@@ -51,13 +51,13 @@ RUN apt-get update && \
   pip3 --no-cache-dir install --upgrade pip && \
   rm -rf /var/lib/apt/lists/*
 
-RUN useradd -ms /bin/bash ilab-user
-
+RUN useradd -ms --disabled-password /bin/bash ilab-user
+USER ilab-user
 WORKDIR /home/ilab-user
 
 ARG USERNAME=ilab-user
 
-RUN apt-get -y install bash && export HOME=/home/ilab-user
+RUN export HOME=/home/ilab-user
 
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
     && mkdir commandhistory \
