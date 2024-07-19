@@ -3,6 +3,7 @@ FROM ubuntu:22.04
 LABEL maintainer "Franck Descollonges <franck_descollonges@fr.ibm.com>"
 
 RUN apt-get update && \
+    apt-get install -y software-properties-common && \
     add-apt-repository ppa:graphics-drivers && \
     apt install -y nvidia-driver-550 && \
     apt-get install -y --no-install-recommends gnupg2 curl ca-certificates && \
