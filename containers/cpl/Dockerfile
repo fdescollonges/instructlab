@@ -3,7 +3,8 @@ FROM ubuntu:22.04
 LABEL maintainer "Franck Descollonges <franck_descollonges@fr.ibm.com>"
 
 RUN apt-get update && \
-    apt-get install -y linux-modules-nvidia-550-generic && \
+    add-apt-repository ppa:graphics-drivers && \
+    apt install -y nvidia-driver-550 && \
     apt-get install -y --no-install-recommends gnupg2 curl ca-certificates && \
     curl -fsSLO https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
     dpkg -i cuda-keyring_1.1-1_all.deb && \
