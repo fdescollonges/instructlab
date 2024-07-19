@@ -51,7 +51,7 @@ RUN apt-get update && \
   pip3 --no-cache-dir install --upgrade pip && \
   rm -rf /var/lib/apt/lists/*
 
-RUN useradd -ms /bin/bash ilab-user && passwd -d ilab-user
+RUN useradd -ms /bin/bash -p "$(openssl passwd -1 ilab-pwd) ilab-user
 USER ilab-user
 WORKDIR /home/ilab-user
 
