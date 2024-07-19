@@ -29,10 +29,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ${NV_CUDA_COMPAT_PACKAGE} \
     && rm -rf /var/lib/apt/lists/*
 
+# RUN apt-get update && apt-get -y install nvidia-utils-550
 
-RUN   apt-get update && \
+#RUN   apt-get update && \
 #      apt-get -y install cuda-toolkit-12-4 && \
-      apt-get -y install nvidia-utils-550 && \
+#      apt-get -y install nvidia-utils-550 && \
 #      apt-get -y install nvtop && \
 #      apt-get -y install pciutils
 
