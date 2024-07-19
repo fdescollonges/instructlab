@@ -2,7 +2,7 @@
 
 FROM nvcr.io/nvidia/cuda:12.4.1-devel-ubi9
 RUN dnf install -y python3.11 python3.11-devel git python3-pip make automake gcc gcc-c++
-WORKDIR /instructlab
+WORKDIR /home/ilabuser
 RUN python3.11 -m ensurepip
 RUN rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 RUN rpm -ivh https://us.download.nvidia.com/tesla/550.54.14/nvidia-driver-local-repo-rhel9-550.54.14-1.0-1.x86_64.rpm 
@@ -16,15 +16,13 @@ RUN export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cu
     && export CUDA_HOME=/usr/local/cuda \
     && export PATH="/usr/local/cuda/bin:$PATH" \
     && export XLA_TARGET=cuda120 \
-    && export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/local/cuda
+    && export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/local/cuda \
+	&& export HOME=/home/ilabuser
 
 ARG GIT_TAG=stable
-
-RUN chgrp -R 0 /instructlab && \
-    chmod -R g=u /instructlab
-	
-RUN chgrp -R 0 /home && \
-    chmod -R g=u /home
+ 
+RUN chgrp -R 0 /home/ilabuser && \
+    chmod -R g=u /home/ilabuser
 
 	
 CMD ["/bin/bash"]
