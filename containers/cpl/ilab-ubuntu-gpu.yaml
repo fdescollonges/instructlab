@@ -11,12 +11,10 @@ spec:
   selector:
     matchLabels:
       app: ilab-ubuntu-gpu
-  
   template:
     metadata:
       labels:
         app: ilab-ubuntu-gpu
-    
     spec:
       containers:
       - name: ilab-ubuntu-gpu
@@ -32,28 +30,16 @@ spec:
               nvidia.com/gpu: '1'
         image: image-registry.openshift-image-registry.svc:5000/instructlab-fd/ilab-ubuntu-gpu:latest		
         command: ["/bin/sleep", "infinity"]
+        volumeMounts:
+          - name: home
+            mountPath: /home
       nodeSelector:
         beta.kubernetes.io/os: linux
-      volumeMounts:
+
+      volumes:
         - name: home
-       mountPath: /home
-    volumes:
-      - name: home
-        persistentVolumeClaim:
-          claimName: instructlab-ubuntu-gpu
-
-
-
-
-
-
-
-
-
-
-
-Message Coralie Jonvel
-
+          persistentVolumeClaim:
+            claimName: instructlab-ubuntu-gpu
 
 
 

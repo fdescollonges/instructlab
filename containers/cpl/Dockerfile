@@ -29,13 +29,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ${NV_CUDA_COMPAT_PACKAGE} \
     && rm -rf /var/lib/apt/lists/*
 
-# RUN apt-get update && apt-get -y install nvidia-utils-550
-
-#RUN   apt-get update && \
-#      apt-get -y install cuda-toolkit-12-4 && \
-#      apt-get -y install nvidia-utils-550 && \
-#      apt-get -y install nvtop && \
-#      apt-get -y install pciutils
+RUN apt-get update && \
+    apt-get -y install nvtop && \
+    apt-get -y install pciutils
 
 # Required for nvidia-docker v1
 RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf \ 
@@ -55,12 +51,19 @@ RUN apt-get update && \
   pip3 --no-cache-dir install --upgrade pip && \
   rm -rf /var/lib/apt/lists/*
 
-WORKDIR /instructlab
-RUN chgrp -R 0 /instructlab && \
-    chmod -R g=u /instructlab
-	
-RUN chgrp -R 0 /home && \
-    chmod -R g=u /home
+WORKDIR /home/user
 
+RUN chgrp -R 0 /home/user && \
+    chmod -R g=u /home/user && \
+    export HOME=/home/user
+
+ARG USERNAME=user
+
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
+    && mkdir /commandhistory \
+    && touch /commandhistory/.bash_history \
+    && chown -R $USERNAME /commandhistory \
+    && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
+    
 CMD ["/bin/bash"]
 LABEL com.redhat.component="instructlab"
