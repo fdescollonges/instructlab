@@ -45,9 +45,9 @@ ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 
 RUN apt-get update && \
-  apt-get install -y python3-pip python3.11 && apt install python3.11-venv\
+  apt-get install -y python3-pip python3.11 python3.11-venv python3.11-devel && \
   cd /usr/local/bin && \
-  ln -s /usr/bin/python3 python && \
+  ln -s /usr/bin/python3.11 python && \
   pip3 --no-cache-dir install --upgrade pip && \
   rm -rf /var/lib/apt/lists/*
 
