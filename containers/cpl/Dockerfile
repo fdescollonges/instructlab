@@ -2,14 +2,17 @@ FROM ubuntu:22.04
 
 LABEL maintainer "Franck Descollonges <franck_descollonges@fr.ibm.com>"
 
+RUN ubuntu-drivers install --gpgpu
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg2 curl ca-certificates && \
     curl -fsSLO https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
     dpkg -i cuda-keyring_1.1-1_all.deb && \
     apt-get update && \
-    apt-get -y install cuda-toolkit-12-4 && \
+    apt-get -y install cuda-12-4 && \
     apt-get -y install nvidia-utils-535 && \
     apt-get -y install nvtop
+
 
 # Required for nvidia-docker v1
 RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf \ 
