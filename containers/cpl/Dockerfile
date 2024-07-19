@@ -57,13 +57,15 @@ WORKDIR /home/ilab-user
 
 ARG USERNAME=ilab-user
 
+RUN apt-get -y install bash && export HOME=/home/ilab-user
+
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
     && mkdir commandhistory \
     && touch commandhistory/.bash_history \
     && chown -R $USERNAME commandhistory \
     && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
 
-RUN export HOME=/home/ilab-user
+
 
 CMD ["/bin/bash"]
 LABEL com.redhat.component="instructlab"
