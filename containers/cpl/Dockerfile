@@ -51,19 +51,19 @@ RUN apt-get update && \
   pip3 --no-cache-dir install --upgrade pip && \
   rm -rf /var/lib/apt/lists/*
 
-WORKDIR /home/user
+WORKDIR /home/ilab-user
 
-RUN chgrp -R 0 /home/user && \
-    chmod -R g=u /home/user && \
-    export HOME=/home/user
+RUN chgrp -R 0 /home/ilab-user && \
+    chmod -R g=u /home/ilab-user && \
+    export HOME=/home/ilab-user
 
-ARG USERNAME=user
+ARG USERNAME=ilab-user
 
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
     && mkdir /commandhistory \
     && touch /commandhistory/.bash_history \
     && chown -R $USERNAME /commandhistory \
     && echo "$SNIPPET" >> "/home/$USERNAME/.bashrc"
-    
+
 CMD ["/bin/bash"]
 LABEL com.redhat.component="instructlab"
