@@ -1,0 +1,58 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  resourceVersion: '254445038'
+  name: ilab-rhel-gpu-deployment
+  namespace: instructlab-fd
+  labels:
+    app: ilab-rhel-gpu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ilab-rhel-gpu
+  template:
+    metadata:
+      labels:
+        app: ilab-rhel-gpu
+    spec:
+      volumes:
+        - name: home
+          persistentVolumeClaim:
+            claimName: instructlab-rhel-gpu
+      containers:
+        - name: ilab-rhel-gpu
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/instructlab-fd/instructlab-rhel-gpu:latest
+          command:
+            - /bin/sleep
+            - infinity
+          resources:
+            limits:
+              cpu: '4'
+              memory: 32Gi
+              nvidia.com/gpu: '1'
+            requests:
+              cpu: '1'
+              memory: 16Gi
+              nvidia.com/gpu: '1'
+          volumeMounts:
+            - name: home
+              mountPath: /home
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
