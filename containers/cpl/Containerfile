@@ -21,10 +21,14 @@ RUN export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cu
 
 ARG GIT_TAG=stable
  
-RUN chgrp -R 0 /home/ilabuser && \
-    chmod -R g=u /home/ilabuser
+RUN useradd -ms /bin/bash -p "$(openssl passwd -1 ilabpwd)" ilabuser
+USER ilabuser
+WORKDIR /home/ilabuser
 
-	
+ARG USERNAME=ilabuser
+
+RUN export HOME=/home/ilabuser
+
 CMD ["/bin/bash"]
 
 LABEL com.redhat.component="instructlab"

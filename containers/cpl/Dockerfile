@@ -52,13 +52,13 @@ RUN apt-get update && \
   pip3 --no-cache-dir install --upgrade pip && \
   rm -rf /var/lib/apt/lists/*
 
-RUN useradd -ms /bin/bash -p "$(openssl passwd -1 ilab-pwd)" ilab-user
-USER ilab-user
-WORKDIR /home/ilab-user
+RUN useradd -ms /bin/bash -p "$(openssl passwd -1 ilabpwd)" ilabuser
+USER ilabuser
+WORKDIR /home/ilabuser
 
-ARG USERNAME=ilab-user
+ARG USERNAME=ilabuser
 
-RUN export HOME=/home/ilab-user
+RUN export HOME=/home/ilabuser
 
 RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
     && mkdir commandhistory \
