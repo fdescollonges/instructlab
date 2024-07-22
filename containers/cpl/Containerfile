@@ -9,7 +9,7 @@ RUN rpm -ivh https://us.download.nvidia.com/tesla/550.54.14/nvidia-driver-local-
 RUN dnf config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/rhel9/x86_64/cuda-rhel9.repo && dnf repolist && dnf config-manager --set-enabled cuda-rhel9-x86_64 && dnf config-manager --set-enabled cuda && dnf config-manager --set-enabled epel && dnf update -y
 RUN dnf install -y libcudnn8 nvidia-driver-NVML-550.54.14-1.el9 nvidia-driver-cuda-libs-550.54.14-1.el9 
 
-RUN dnf install -y pciutils
+RUN dnf install -y pciutils nvtop
 
 RUN python3.11 -m pip install --force-reinstall nvidia-cuda-nvcc-cu12
 RUN export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64" \
@@ -21,13 +21,11 @@ RUN export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cu
 
 ARG GIT_TAG=stable
  
-RUN useradd -ms /bin/bash -p "$(openssl passwd -1 ilabpwd)" ilabuser
-USER ilabuser
 WORKDIR /home/ilabuser
 
-ARG USERNAME=ilabuser
-
 RUN export HOME=/home/ilabuser
+RUN chgrp -R 0 /home/ilabuser && \
+    chmod -R g=u /home/ilabuser
 
 CMD ["/bin/bash"]
 
